@@ -1,0 +1,27 @@
+apiVersion: 1.0.0
+metadata:
+  name: zosconnect-employees
+projects:
+  - name: employee-api
+    source:
+      location: 'https://github.com/devadastv/restapp-sample.git'
+      type: git
+      branch: master
+components:
+  - mountSources: true
+    endpoints:
+      - attributes:
+          path: /zosConnect/designer
+        name: zosconnect-ui-endpoint
+        port: 9080
+    memoryLimit: 4927M
+    type: dockerimage
+    image: 'ibmcom/websphere-liberty:20.0.0.12-full-java8-ibmjava-ubi'
+    alias: zosconnect
+    env:
+      - value: /workspace/project
+        name: CHE_PROJECTS_ROOT
+  - id: redhat/vscode-xml/latest
+    type: chePlugin
+  - id: redhat/vscode-yaml/latest
+    type: chePlugin
